@@ -1,0 +1,72 @@
+重装官方linux系统  默认root 密码是 MoeClub.org
+方法一
+1. wget --no-check-certificate -qO InstallNET.sh 'https://moeclub.org/attachment/LinuxShell/InstallNET.sh' && chmod a+x InstallNET.sh
+
+2. bash InstallNET.sh -d 9 -v 64 -a --mirror 'http://ftp.hk.debian.org/debian/'
+这里 选择的是debian9 x64
+一般30分钟即可完成.镜像可以自行替换.
+
+方法二
+##镜像文件在OneDrive
+wget -N --no-check-certificate https://raw.githubusercontent.com/veip007/dd/master/dd-od.sh && chmod +x dd-od.sh && ./dd-od.sh
+ ##镜像文件在GoogleDrive
+wget -N --no-check-certificate https://raw.githubusercontent.com/veip007/dd/master/dd-gd.sh && chmod +x dd-gd.sh && ./dd-gd.sh
+
+
+
+
+修改ssh端口
+vi /etc/ssh/sshd_config   
+重启sshd
+/etc/init.d/ssh restart
+
+
+
+修改镜像源地址
+vi /etc/apt/sources.list
+添加如下:
+deb http://deb.debian.org/debian/ stretch main
+deb-src http://deb.debian.org/debian/ stretch main
+deb http://security.debian.org/ stretch/updates main
+deb-src http://security.debian.org/ stretch/updates main
+deb http://deb.debian.org/debian/ stretch-updates main
+deb-src http://deb.debian.org/debian/ stretch-updates main
+保持退出
+
+执行
+apt-get update && apt-get upgrade
+
+
+安装 curl
+apt-get install curl
+
+
+安装 pstree
+apt-get install psmisc
+
+
+安装 lsb_release
+apt-get install lsb-release
+
+
+开启 BBR
+修改sysctl.conf配置文件
+echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
+echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
+保存sysctl并使之生效
+sysctl -p
+验证是否启动
+lsmod | grep bbr
+
+
+
+
+
+
+
+
+
+
+
+
+
