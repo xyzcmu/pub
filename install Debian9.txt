@@ -50,6 +50,10 @@ apt-get install psmisc
 apt-get install lsb-release
 
 
+安装 ifconfig netstat
+apt-get install net-tools
+
+
 开启 BBR
 修改sysctl.conf配置文件
 echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
