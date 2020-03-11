@@ -54,6 +54,18 @@ apt-get install lsb-release
 apt-get install net-tools
 
 
+安装 lsof
+apt-get install lsof
+
+
+
+
+
+
+
+
+
+
 开启 BBR
 修改sysctl.conf配置文件
 echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
