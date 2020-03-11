@@ -62,6 +62,10 @@ apt-get install lsof
 apt-get install tree
 
 
+设置 vi
+vi ~/.vimrc 添加:
+set nu
+set ts=4
 
 
 
