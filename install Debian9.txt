@@ -58,7 +58,8 @@ apt-get install net-tools
 apt-get install lsof
 
 
-
+安装 tree
+apt-get install tree
 
 
 
