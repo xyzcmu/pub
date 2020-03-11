@@ -62,6 +62,10 @@ apt-get install lsof
 apt-get install tree
 
 
+安装 dos2unix unix2dos
+apt-get install dos2unix unix2dos
+
+
 设置 vi
 vi ~/.vimrc 添加:
 set nu
