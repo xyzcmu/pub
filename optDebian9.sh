@@ -249,4 +249,8 @@ yellow "修改trojan客户端的 config.json 文件"
 yellow "修改 remote_addr:${your_domain} 和 password:${trojan_psw}"
 yellow "双击 trojan-start.bat trojan客户端将运行在1080端口..."
 
+# 修改 ssh 端口号
+read -p "请输入新的 ssh 端口:　"　newssh_port
+sed -i.bak 
+
 exit 0
