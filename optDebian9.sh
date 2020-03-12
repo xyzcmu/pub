@@ -250,7 +250,39 @@ yellow "修改 remote_addr:${your_domain} 和 password:${trojan_psw}"
 yellow "双击 trojan-start.bat trojan客户端将运行在1080端口..."
 
 # 修改 ssh 端口号
-read -p "请输入新的 ssh 端口:　"　newssh_port
-sed -i.bak 
+# 查找当前端口
+sshfile="/etc/ssh/sshd_config"
+[[ -z "`grep ^Port $sshfile`" ]] && ssh_port=22 || ssh_port=`grep ^Port $sshfile | awk '{print $2}'`
+while :;do
+read -p "请输入新的ssh端口[当前--$ssh_port]:" newport
+# 检测 端口范围 不能是 22, 且在 1025-65534 之间
+if [[ $newport != 22 && $newport -gt 1024 && $newport -lt 65535 ]];then
+# 检测 端口 是否被占用
+if [[ -z "`lsof -i:$newport`" ]];then
+break
+else
+echo "$newport 被占用!"
+fi
+else
+echo "端口不能是22, 且不在 1025-65534 之间"
+fi
+done
+# 修改
+if [[ "`grep ^Port $sshfile`" ]];then
+sed -i "s/^Port.*/Port $newport/" $sshfile
+elif [[ "`grep ^#Port /etc/ssh/sshd_config`" ]];then
+sed -i "s/^#Port.*/&\nPort $newport/" $sshfile
+fi
+# 重启服务
+systemctl restart ssh
+yellow "新的ssh端口: $newport 已生效!"
+
+
+
+
+
+
+
+
 
 exit 0
