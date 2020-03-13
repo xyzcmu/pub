@@ -124,7 +124,7 @@ curl https://get.acme.sh | sh
 source ~/.bashrc
 
 # 证书签发成功后,放在 /root/.acme.sh/your_domain目录下
-acme.sh --issue -d $your_domain -w /usr/share/nginx/html/
+/root/.acme.sh/acme.sh --issue -d $your_domain -w /usr/share/nginx/html/
 if [[ $? == 0 ]];then
 yellow "证书签发成功!"
 else
@@ -133,13 +133,13 @@ exit 1
 fi
 
 # 安装证书(通过拷贝的方式放到nginx相应目录)
-acme.sh --installcert -d $your_domain \
+/root/.acme.sh/acme.sh --installcert -d $your_domain \
 --key-file $key \
 --fullchain-file $cert \
 --reloadcmd "nginx -s reload"
 
 # 自动更新 acme.sh
-acme.sh  --upgrade  --auto-upgrade
+/root/.acme.sh/acme.sh  --upgrade  --auto-upgrade
 
 
 # 下载 trojan 服务端
@@ -156,6 +156,7 @@ if [[ -n $version ]];then
   echo "trojan服务端下载成功!"  
 else
   echo "获取trojan版本号失败!"
+  exit 1
 fi
 
 tar -xJf trojan-*.tar.xz
