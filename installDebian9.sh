@@ -14,7 +14,7 @@ if [[ $isDef != "y" ]];then
   read -p "请输入镜像地址:" mirror_addr
 fi
 echo "安装过程大约30分钟,根据vps性能不同有所差异..."
-echo "默认 root 密码是:MoeClub.org"
+yellow "默认 root 密码是:MoeClub.org"
 echo "安装好之后,记得修改密码哦!"
 yellow "3s后,开始安装..."
 yellow "3..."
