@@ -12,6 +12,8 @@ bred(){
     echo -e "\033[31m\033[01m[ $1 ]\033[0m"
 }
 
+
+commonSet() {
 # 设置镜像源地址列表
 cat > /etc/apt/sources.list << EOF
 deb http://ftp.hk.debian.org/debian/ stretch main
@@ -23,7 +25,6 @@ deb-src http://security.debian.org/ stretch/updates main
 deb http://deb.debian.org/debian/ stretch-updates main
 deb-src http://deb.debian.org/debian/ stretch-updates main
 EOF
-
 
 # 设置 vi 显示行号和tab缩进4个字符
 cat >> ~/.vimrc << EOF
@@ -44,16 +45,11 @@ sysctl -p
 apt-get update && apt-get upgrade
 apt-get -y install curl psmisc lsb-release net-tools lsof tree dos2unix xz-utils
 
-
 yellow "Debian9常用软件和设置已经配置好了!"
-
-# 是否安装 trojan
-read -p "是否要安装trojan? [y/n]" installTro
-if [[ $installTro != "y" ]];then
-  exit 0
-fi
+}
 
 
+checkDomain() {
 while :;do
   bred "请确认你的域名以可以正常解析[ping your_domain.com]"
   read -p "是否正常解析好了? [y/n]" domainOk
@@ -64,12 +60,11 @@ while :;do
   fi
 sleep 2
 done
-
 read -p "请输入你的域名:" your_domain
+}
 
 
-
-
+nginxStaticWeb() {
 # 安装 nginx 并设置开机启动
 apt-get install nginx && systemctl enable nginx.service
 
@@ -109,7 +104,10 @@ cd /usr/share/nginx/html/
 wget --no-check-certificate "$my_web"
 tar -xJf *.tar.xz
 systemctl restart nginx.service
+}
 
+
+applySSL() {
 # 证书和私钥 位置
 cert="/usr/src/trojan-cert/fullchain.cer"
 key="/usr/src/trojan-cert/private.key"
@@ -129,25 +127,26 @@ if [[ $? == 0 ]];then
 yellow "证书签发成功!"
 else
 yellow "证书签发失败!"
-exit 1
+return 1
 fi
-
-# 安装证书(通过拷贝的方式放到nginx相应目录)
-/root/.acme.sh/acme.sh --installcert -d $your_domain \
---key-file $key \
---fullchain-file $cert \
---reloadcmd "nginx -s reload"
 
 # 自动更新 acme.sh
 /root/.acme.sh/acme.sh  --upgrade  --auto-upgrade
 
+# 安装证书(通过拷贝的方式放到相应目录)
+# 重启 nginx
+/root/.acme.sh/acme.sh --installcert -d $your_domain \
+--key-file $key \
+--fullchain-file $cert \
+--reloadcmd "nginx -s reload"
+}
 
+
+trojanServer() {
 # 下载 trojan 服务端
 cd /usr/src
-
 version=$(curl -o trojan.info https://github.com/trojan-gfw/trojan/releases && cat trojan.info | grep -m 1 -E '<a href.*release.*\/a>'|
 sed -r 's/<a href.*tag\/v(.*)\".*a>/\1/'|sed 's/[[:space:]]//g')
-
 rm trojan.info
 
 if [[ -n $version ]];then
@@ -160,7 +159,6 @@ else
 fi
 
 tar -xJf trojan-*.tar.xz
-
 
 read -p "输入trojan服务端密码:" trojan_psw
 
@@ -230,7 +228,10 @@ EOF
  # 设置开机启动
  systemctl start trojan.service
  systemctl enable trojan.service
+}
 
+
+trojanCli() {
 # trojan客户端
 trojan_cli="https://github.com/trojan-gfw/trojan/releases"
 
@@ -256,13 +257,10 @@ fi
 yellow "修改trojan客户端的 config.json 文件"
 yellow "修改 remote_addr:${your_domain} 和 password:${trojan_psw}"
 yellow "手动启动trojan客户端 将运行在1080端口..."
+}
 
-# 修改 ssh 端口号
-read -p "是否要修改ssh端口号?[y/n]" isChange
-if [[ $isChange != "y" ]];then
-exit 0
-fi
 
+changeSshPort() {
 # 查找当前端口
 sshfile="/etc/ssh/sshd_config"
 [[ -z "`grep ^Port $sshfile`" ]] && ssh_port=22 || ssh_port=`grep ^Port $sshfile | awk '{print $2}'`
@@ -289,4 +287,35 @@ fi
 # 重启服务
 systemctl restart ssh
 yellow "新的ssh端口: $newport 已生效!"
-exit 0
+}
+
+
+installTrojan() {
+checkDomain
+
+nginxStaticWeb
+
+applySSL
+
+trojanServer
+
+trojanCli
+}
+
+
+main() {
+commonSet
+
+read -p "是否要安装trojan 并 设置静态站点? [y/n]" installTro
+if [[ $installTro = "y" ]];then
+  installTrojan
+fi
+
+# 修改 ssh 端口号
+read -p "是否要修改ssh端口号?[y/n]" isChange
+if [[ $isChange = "y" ]];then
+changeSshPort
+fi
+}
+
+main
