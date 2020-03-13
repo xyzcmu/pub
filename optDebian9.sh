@@ -255,9 +255,14 @@ fi
 
 yellow "修改trojan客户端的 config.json 文件"
 yellow "修改 remote_addr:${your_domain} 和 password:${trojan_psw}"
-yellow "双击 trojan-start.bat trojan客户端将运行在1080端口..."
+yellow "手动启动trojan客户端 将运行在1080端口..."
 
 # 修改 ssh 端口号
+read -p "是否要修改ssh端口号?[y/n]" isChange
+if [[ $isChange != "y" ]];then
+exit 0
+fi
+
 # 查找当前端口
 sshfile="/etc/ssh/sshd_config"
 [[ -z "`grep ^Port $sshfile`" ]] && ssh_port=22 || ssh_port=`grep ^Port $sshfile | awk '{print $2}'`
