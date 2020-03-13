@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env bash
+#!/usr/bin/env bash
 
 # 基于 debian9 
 # 安装系统必要的软件,配置trojan(可选项)
@@ -155,7 +155,7 @@ if [[ -n $version ]];then
   echo "trojan服务端下载成功!"  
 else
   echo "获取trojan版本号失败!"
-  exit 1
+  return 1
 fi
 
 tar -xJf trojan-*.tar.xz
@@ -295,11 +295,7 @@ checkDomain
 
 nginxStaticWeb
 
-applySSL
-
-trojanServer
-
-trojanCli
+applySSL && trojanServer && trojanCli
 }
 
 
