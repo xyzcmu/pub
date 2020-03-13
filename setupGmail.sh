@@ -35,7 +35,6 @@ else
   set ssl-verify=ignore
   set nss-config-dir=/etc/pki/nssdb/
 EOF
-  [[ $? -eq 0 ]] && echoColor 33 "ok...." || echo 34 "error...";exit 1
   echoColor 34 "s-nail 安装完成!"
   echoColor 34 "一般用法:　s-nail -s 主题 -a /path/some.file xxx@email.com < /path/some.file"
   echoColor 34 "一般用法:　echo 内容 | s-nail -s 主题 -a /path/some.file xxx@email.com"
