@@ -10,7 +10,7 @@ echoColor 34 "==== 设置 Gmail ===="
 echoColor 33 "拥有Gmail 应用专用密码? [y/n]"
 read hasCode
 if [[ $hasCode != 'y' ]];then
-  echoColor 34 "请去 google账号-->安全性-->应用专用密码 生成"
+  echoColor 34 "请去 google账号-->安全性-->应用专用密码 生成..."
   exit 1
 else
   while :;do
