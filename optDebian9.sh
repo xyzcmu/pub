@@ -53,13 +53,12 @@ if [[ $installTro != "y" ]];then
   exit 0
 fi
 
-isTrue="true"
 
-while [[ $isTrue == "true" ]];do
+while :;do
   bred "请确认你的域名以可以正常解析[ping your_domain.com]"
   read -p "是否正常解析好了? [y/n]" domainOk
-  if [[ $domainOk == "y" -o $domainOk == "Y" ]];then
-    isTrue="false"
+  if [[ $domainOk == "y" ]];then
+    break
   else
     echo "你先去解析好域名再来!"  
   fi
@@ -126,6 +125,12 @@ source ~/.bashrc
 
 # 证书签发成功后,放在 /root/.acme.sh/your_domain目录下
 acme.sh --issue -d $your_domain -w /usr/share/nginx/html/
+if [[ $? == 0 ]];then
+yellow "证书签发成功!"
+else
+yellow "证书签发失败!"
+exit 1
+fi
 
 # 安装证书(通过拷贝的方式放到nginx相应目录)
 acme.sh --installcert -d $your_domain \
