@@ -321,13 +321,11 @@ if [[ $installTro = "y" ]];then
   installTrojan
 fi
 
-# 修改 ssh 端口号
 read -p "是否要修改ssh端口号?[y/n]" isChange
 if [[ $isChange = "y" ]];then
 changeSshPort
 fi
 
-# 卸载 vim-tiny 安装 vim
 read -p "是否要卸载系统自带的 vim-tiny, 并安装VIM? [y/n]" isVim
 [[ $isVim == 'y' ]] && reInstallVim
 }
