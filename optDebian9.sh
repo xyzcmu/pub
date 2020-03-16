@@ -27,10 +27,12 @@ deb-src http://deb.debian.org/debian/ stretch-updates main
 EOF
 
 # 设置 vi 显示行号和tab缩进4个字符
+if [[ -z $(grep "set nu" ~/.vimrc) && -z $(grep "set ts=4" ~/.vimrc) ]];then
 cat >> ~/.vimrc << EOF
 set nu
 set ts=4
 EOF
+fi
 
 # 设置别名 ll
 cat >> ~/.bashrc << EOF
