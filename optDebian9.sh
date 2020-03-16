@@ -32,6 +32,12 @@ set nu
 set ts=4
 EOF
 
+# 设置别名 ll
+cat >> ~/.bashrc << EOF
+alias ll='ls -l --color'
+EOF
+source ~/.bashrc
+
 # 设置上海时间和硬件时间
 cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 hwclock --systohc
@@ -299,6 +305,12 @@ applySSL && trojanServer && trojanCli
 }
 
 
+reInstallVim() {
+apt-get -y remove --purge vim vim-runtime vim-tiny vim-common vim-scripts vim-doc
+apt-get -y install vim
+}
+
+
 main() {
 commonSet
 
@@ -312,6 +324,11 @@ read -p "是否要修改ssh端口号?[y/n]" isChange
 if [[ $isChange = "y" ]];then
 changeSshPort
 fi
+
+# 卸载 vim-tiny 安装 vim
+read -p "是否要卸载系统自带的 vim-tiny, 并安装VIM? [y/n]" isVim
+[[ $isVim == 'y' ]] && reInstallVim
 }
+
 
 main
