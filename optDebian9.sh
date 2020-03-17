@@ -35,10 +35,12 @@ EOF
 fi
 
 # 设置别名 ll
+if [[ -z $(grep "alias ll=" ~/.bashrc) ]];then
 cat >> ~/.bashrc << EOF
 alias ll='ls -l --color'
 EOF
 source ~/.bashrc
+fi
 
 # 设置上海时间和硬件时间
 cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
