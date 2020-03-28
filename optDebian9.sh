@@ -35,7 +35,7 @@ EOF
 fi
 
 # 设置别名 ll
-if [[ -z $(grep "alias ll=" ~/.bashrc) ]];then
+if [[ -z $(grep "^alias ll=" ~/.bashrc) ]];then
 cat >> ~/.bashrc << EOF
 alias ll='ls -l --color'
 EOF
