@@ -8,7 +8,7 @@ wget --no-check-certificate -qO InstallNET.sh 'https://moeclub.org/attachment/Li
 
 mirror_addr="http://ftp.hk.debian.org/debian/"
 
-yellow "默认 root 密码是:MoeClub.org"
+yellow "默认 root 密码是:uMiss233"
 echo "默认镜像地址是:http://ftp.hk.debian.org/debian/"
 read -p "是否使用默认镜像?　[y/n]" isDef
 if [[ $isDef != "y" ]];then
@@ -23,4 +23,4 @@ yellow "2..."
 sleep 1
 yellow "1..."
 sleep 1
-bash InstallNET.sh -d 9 -v 64 -a --mirror "$mirror_addr"
+bash InstallNET.sh -p uMiss233 -d 9 -v 64 -a --mirror "$mirror_addr"
