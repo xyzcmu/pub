@@ -156,7 +156,7 @@ getLatestVer() {
 # 下载最新版本 trojan服务端
 cd /usr/src
 cur_ver=""
-[ -f trojan.version ] && cur_ver=`cat trojan.ver`
+[[ -f trojan.ver ]] && cur_ver=`cat trojan.ver`
 bred "---当前trojan版本$cur_ver---"
 
 version=$(curl -o trojan.info https://github.com/trojan-gfw/trojan/releases && cat trojan.info | grep -m 1 -E '<a href.*release.*\/a>'|
