@@ -121,6 +121,11 @@ applySSL() {
 # 证书和私钥 位置
 cert="/usr/src/trojan-cert/fullchain.cer"
 key="/usr/src/trojan-cert/private.key"
+if [ -f "$cert" -a -f "$key" ];then
+  bred "$cert, 已经存在"
+  bred "$key, 已经存在"
+  return 0
+fi
 mkdir /usr/src/trojan-cert
 
 # 通过 acme.sh 申请证书
@@ -163,8 +168,11 @@ version=$(curl -o trojan.info https://github.com/trojan-gfw/trojan/releases && c
 sed -r 's/<a href.*tag\/v(.*)\".*a>/\1/'|sed 's/[[:space:]]//g')
 rm trojan.info 
 
+if [[ "$version" == "" ]];then
+  yellow "获取版本号失败...网络异常或者目标页面有改动,请确认..."
+  return 1
+fi
 bred "---查询到trojan最新版本$version---"
-sleep 3s
 
 if [[ "$version" != "$cur_ver" ]];then
   echo "$version" > ./trojan/trojan.ver
@@ -182,6 +190,9 @@ tar -xJf trojan-$version-linux-amd64.tar.xz
 trojanServer() {
 # 下载 最新trojan 服务端
 getLatestVer
+if [[ $? == "1" ]];then
+  return 1
+fi
 
 read -p "输入trojan服务端密码:" trojan_psw
 
