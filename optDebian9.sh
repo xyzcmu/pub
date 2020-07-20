@@ -152,8 +152,8 @@ fi
 }
 
 
-trojanServer() {
-# 下载 trojan 服务端
+getLatestVer() {
+# 下载最新版本 trojan服务端
 cd /usr/src
 version=$(curl -o trojan.info https://github.com/trojan-gfw/trojan/releases && cat trojan.info | grep -m 1 -E '<a href.*release.*\/a>'|
 sed -r 's/<a href.*tag\/v(.*)\".*a>/\1/'|sed 's/[[:space:]]//g')
@@ -161,14 +161,20 @@ rm trojan.info
 
 if [[ -n $version ]];then
   bred "开始下载trojan服务端..."
-  wget --no-check-certificate https://github.com/trojan-gfw/trojan/releases/download/v$version/trojan-$version-linux-amd64.tar.xz
+  wget --no-check-certificate https://github.com/trojan-gfw/trojan/releases/download/v$version/trojan-$version-linux-amd64.tar.xz &&
   echo "trojan服务端下载成功!"  
 else
   echo "获取trojan版本号失败!"
   return 1
 fi
 
-tar -xJf trojan-*.tar.xz
+tar -xJf trojan-$version-linux-amd64.tar.xz
+}
+
+
+trojanServer() {
+# 下载 最新trojan 服务端
+getLatestVer
 
 read -p "输入trojan服务端密码:" trojan_psw
 
@@ -316,20 +322,44 @@ apt-get -y install vim
 
 
 main() {
-commonSet
+# 菜单选项
+opts[0]="退出"
+opts[1]="设置镜像源地址(hk) 开启BBR 时间校准 常用软件,建议重装系统后执行一次"
+opts[2]="安装trojan服务端 设置静态站点"
+opts[3]="更新trojan服务端"
+opts[4]="修改ssh 端口"
+opts[5]="卸载系统自带的 vim-tiny, 安装 VIM"
 
-read -p "是否要安装trojan 并 设置静态站点? [y/n]" installTro
-if [[ $installTro = "y" ]];then
-  installTrojan
-fi
+ifs_old=$IFS
+export IFS=$''
+PS="根据提示,输入你的选择: "
 
-read -p "是否要修改ssh端口号?[y/n]" isChange
-if [[ $isChange = "y" ]];then
-changeSshPort
-fi
-
-read -p "是否要卸载系统自带的 vim-tiny, 并安装VIM? [y/n]" isVim
-[[ $isVim == 'y' ]] && reInstallVim
+select opt in ${opts[@]}
+do
+  case $REPLY in
+    "1")
+      break
+      ;;
+    "2")
+      commonSet
+      ;;
+    "3")
+      installTrojan
+      ;;
+    "4")
+      getLatestVer
+      ;;
+    "5")
+      changeSshPort
+      ;;
+    "6")
+      reInstallVim
+      ;;
+    *)
+      echo 输入无效
+  esac
+done
+  IFS=$ifs_old
 }
 
 
