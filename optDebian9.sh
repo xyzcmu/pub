@@ -332,7 +332,7 @@ opts[5]="卸载系统自带的 vim-tiny, 安装 VIM"
 
 ifs_old=$IFS
 export IFS=$''
-PS3="根据提示,输入你的选择: "
+export PS3="根据提示,输入你的选择: "
 
 select opt in ${opts[@]}
 do
