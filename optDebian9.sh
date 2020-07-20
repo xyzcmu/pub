@@ -350,6 +350,10 @@ do
       ;;
     "4")
       getLatestVer
+      # 启动服务端
+      # 设置开机启动
+      systemctl start trojan.service
+      systemctl enable trojan.service
       break
       ;;
     "5")
