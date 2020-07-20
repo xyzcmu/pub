@@ -156,18 +156,18 @@ getLatestVer() {
 # 下载最新版本 trojan服务端
 cd /usr/src
 cur_ver=""
-[[ -f trojan.ver ]] && cur_ver=`cat trojan.ver`
+[[ -f ./trojan/trojan.ver ]] && cur_ver=`cat ./trojan/trojan.ver`
 bred "---当前trojan版本$cur_ver---"
 
 version=$(curl -o trojan.info https://github.com/trojan-gfw/trojan/releases && cat trojan.info | grep -m 1 -E '<a href.*release.*\/a>'|
 sed -r 's/<a href.*tag\/v(.*)\".*a>/\1/'|sed 's/[[:space:]]//g')
-rm trojan.info && bred "删除trojan.info"
+rm trojan.info 
 
 bred "---查询到trojan最新版本$version---"
 sleep 3s
 
 if [[ "$version" != "$cur_ver" ]];then
-  echo "$version" > trojan.ver
+  echo "$version" > ./trojan/trojan.ver
   bred "开始下载trojan服务端..."
   wget --no-check-certificate https://github.com/trojan-gfw/trojan/releases/download/v$version/trojan-$version-linux-amd64.tar.xz &&
   echo "trojan服务端下载成功!"  
