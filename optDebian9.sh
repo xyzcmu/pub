@@ -157,10 +157,11 @@ getLatestVer() {
 cd /usr/src
 cur_ver=""
 [[ -f trojan.version ]] && cur_ver=`cat trojan.ver`
+echo "---当前trojan版本$cur_ver---"
 
 version=$(curl -o trojan.info https://github.com/trojan-gfw/trojan/releases && cat trojan.info | grep -m 1 -E '<a href.*release.*\/a>'|
 sed -r 's/<a href.*tag\/v(.*)\".*a>/\1/'|sed 's/[[:space:]]//g')
-rm trojan.info
+rm trojan.info && bred "删除trojan.info"
 
 bred "---查询到trojan最新版本$version---"
 sleet 3s
