@@ -342,24 +342,30 @@ do
       ;;
     "2")
       commonSet
+      break
       ;;
     "3")
       installTrojan
+      break
       ;;
     "4")
       getLatestVer
+      break
       ;;
     "5")
       changeSshPort
+      break
       ;;
     "6")
       reInstallVim
+      break
       ;;
     *)
       echo 输入无效
   esac
 done
-  IFS=$ifs_old
+IFS=$ifs_old
+exit 0
 }
 
 
