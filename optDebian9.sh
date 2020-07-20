@@ -358,6 +358,8 @@ do
     "4")
       systemctl stop trojan.service      
       getLatestVer
+      yellow "若用mysql配置了多用户, 在 /lib/systemd/system/trojan.service的After字段后添加 mysql.service"
+      yellow "这样做,为了VPS重启后,自动运行trojan服务端!"
       # 启动服务端
       # 设置开机启动
       systemctl start trojan.service
