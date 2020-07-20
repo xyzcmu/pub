@@ -168,7 +168,6 @@ if [[ "$version" != "$cur_ver" ]];then
   echo "trojan服务端下载成功!"  
 else
   echo "当前trojan已经是最新版本!"
-  return 1
 fi
 
 tar -xJf trojan-$version-linux-amd64.tar.xz
