@@ -121,7 +121,7 @@ applySSL() {
 # 证书和私钥 位置
 cert="/usr/src/trojan-cert/fullchain.cer"
 key="/usr/src/trojan-cert/private.key"
-if [ -f "$cert" -a -f "$key" ];then
+if [[ -f "$cert" && -f "$key" ]];then
   bred "$cert, 已经存在"
   bred "$key, 已经存在"
   return 0
