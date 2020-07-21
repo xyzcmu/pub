@@ -13,10 +13,8 @@ echo "默认镜像地址是:$mirror_addr"
 read -p "是否使用默认镜像?　[y/n]" isDef
 if [[ $isDef != "y" ]];then
   read -p "请输入镜像地址:" mirror_addr
-  if [[ $mirror_addr =~ http://ftp\.[a-z]+\.debian\.org/debian/ ]];then
-    :
-  else
-    echo "输入的地址有误..."
+  if [[ ! $mirror_addr =~ http://ftp\.[a-z]+\.debian\.org/debian/ ]];then
+        echo "输入的地址有误..."
     exit 1
   fi
 fi
