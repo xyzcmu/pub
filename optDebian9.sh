@@ -16,8 +16,8 @@ bred(){
 commonSet() {
 # 设置镜像源地址列表
 cat > /etc/apt/sources.list << EOF
-deb http://ftp.hk.debian.org/debian/ stretch main
-deb-src http://ftp.hk.debian.org/debian/ stretch main
+deb http://ftp.us.debian.org/debian/ stretch main
+deb-src http://ftp.us.debian.org/debian/ stretch main
 deb http://deb.debian.org/debian/ stretch main
 deb-src http://deb.debian.org/debian/ stretch main
 deb http://security.debian.org/ stretch/updates main
@@ -349,8 +349,8 @@ opts[4]="修改ssh 端口"
 opts[5]="卸载系统自带的 vim-tiny, 安装 VIM"
 
 ifs_old=$IFS
-export IFS=$''
-export PS3="根据提示,输入你的选择: "
+IFS=$''
+PS3="根据提示,输入你的选择: "
 
 select opt in ${opts[@]}
 do
