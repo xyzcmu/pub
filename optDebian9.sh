@@ -267,30 +267,8 @@ EOF
 
 trojanCli() {
 # trojan客户端
-trojan_cli="https://github.com/trojan-gfw/trojan/releases"
-
-bred "请到 ${trojan_cli} 下载对应的客户端"
-
-read -p "是否要创建trojan客户端启动 bat文件? [y/n]" isBat
-
-if [[ $isBat == "y" ]];then
-mkdir /root/trojan-cli-bat
-cat > /root/trojan-cli-bat/trojan-start.bat << EOF
-@ECHO OFF
-%1 start mshta vbscript:createobject("wscript.shell").run("""%~0"" ::",0)(window.close)&&exit
-start /b trojan.exe
-EOF
-cat > /root/trojan-cli-bat/trojan-stop.bat << EOF
-@ECHO OFF
-taskkill /im trojan.exe /f
-ping -n 2 127.1 >nul
-EOF
-bred "请将 /root/trojan-cli-bat/ 目录下的两个bat文件, 拷贝到 trojan.exe 同个目录下" 
-fi
-
-yellow "修改trojan客户端的 config.json 文件"
-yellow "修改 remote_addr:${your_domain} 和 password:${trojan_psw}"
-yellow "手动启动trojan客户端 将运行在1080端口..."
+bred "下载你喜欢的 trojan 客户端 [ trojan-qt5 / clash ]"
+bred "配置客户端 服务器地址, 端口, 密码, 即可使用."
 }
 
 
@@ -342,7 +320,7 @@ apt-get -y install vim
 main() {
 # 菜单选项
 opts[0]="退出"
-opts[1]="设置镜像源地址(hk) 开启BBR 时间校准 常用软件,建议重装系统后执行一次"
+opts[1]="设置镜像源地址(us) 开启BBR 时间校准 常用软件,建议重装系统后执行一次"
 opts[2]="安装trojan服务端 设置静态站点"
 opts[3]="更新trojan服务端"
 opts[4]="修改ssh 端口"
