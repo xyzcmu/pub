@@ -3,7 +3,7 @@ yellow(){
   echo -e "\033[33m\033[01m[ $1 ]\033[0m"
 }
 
-# 安装 debian9 官方ISO
+# 安装 debian10 官方ISO
 wget --no-check-certificate -qO InstallNET.sh 'https://moeclub.org/attachment/LinuxShell/InstallNET.sh' && chmod a+x InstallNET.sh
 
 mirror_addr="http://ftp.hk.debian.org/debian/"
@@ -27,4 +27,4 @@ yellow "2..."
 sleep 1
 yellow "1..."
 sleep 1
-bash InstallNET.sh -p uMiss233 -d 9 -v 64 -a --mirror "$mirror_addr"
+bash InstallNET.sh -p uMiss233 -d 10 -v 64 -a --mirror "$mirror_addr"
