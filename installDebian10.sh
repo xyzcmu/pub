@@ -6,7 +6,7 @@ yellow(){
 # 安装 debian10 官方ISO
 wget --no-check-certificate -qO InstallNET.sh 'https://moeclub.org/attachment/LinuxShell/InstallNET.sh' && chmod a+x InstallNET.sh
 
-mirror_addr="http://ftp.hk.debian.org/debian/"
+mirror_addr="http://ftp.us.debian.org/debian/"
 
 yellow "默认 root 密码是:uMiss233"
 echo "默认镜像地址是:$mirror_addr"
