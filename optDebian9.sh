@@ -16,14 +16,14 @@ bred(){
 commonSet() {
 # 设置镜像源地址列表
 cat > /etc/apt/sources.list << EOF
-deb http://ftp.us.debian.org/debian/ buster main
-deb-src http://ftp.us.debian.org/debian/ buster main
-deb http://deb.debian.org/debian/ buster main
-deb-src http://deb.debian.org/debian/ buster main
-deb http://security.debian.org/ buster/updates main
-deb-src http://security.debian.org/ buster/updates main
-deb http://deb.debian.org/debian/ buster-updates main
-deb-src http://deb.debian.org/debian/ buster-updates main
+deb http://ftp.us.debian.org/debian/ stretch main
+deb-src http://ftp.us.debian.org/debian/ stretch main
+deb http://deb.debian.org/debian/ stretch main
+deb-src http://deb.debian.org/debian/ stretch main
+deb http://security.debian.org/ stretch/updates main
+deb-src http://security.debian.org/ stretch/updates main
+deb http://deb.debian.org/debian/ stretch-updates main
+deb-src http://deb.debian.org/debian/ stretch-updates main
 EOF
 
 # 设置 vi 显示行号和tab缩进4个字符
