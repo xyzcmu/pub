@@ -13,7 +13,7 @@ bred(){
 }
 
 
-commonSet() {
+changeSources() {
 # 设置镜像源地址列表
 cat > /etc/apt/sources.list << EOF
 deb http://ftp.us.debian.org/debian/ stretch main
@@ -28,6 +28,12 @@ deb-src http://security.debian.org/ stretch/updates main
 deb http://deb.debian.org/debian/ stretch-updates main
 deb-src http://deb.debian.org/debian/ stretch-updates main
 EOF
+}
+
+
+commonSet() {
+read -p "是否修改 镜像源地址 [y/n]?" isChange
+[[ $isChange == "y" ]] && changeSources
 
 # 设置 vi 显示行号和tab缩进4个字符
 if [[ -z $(grep "set nu" ~/.vimrc) && -z $(grep "set ts=4" ~/.vimrc) ]];then
