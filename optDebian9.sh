@@ -49,13 +49,10 @@ EOF
 read -p "是否修改 镜像源地址 [y/n]?" isChange
 [[ $isChange == "y" ]] && changeSources
 
-# 设置 vi 显示行号和tab缩进4个字符
-if [[ -z $(grep "set nu" ~/.vimrc) && -z $(grep "set ts=4" ~/.vimrc) ]];then
-cat >> ~/.vimrc << EOF
-set nu
-set ts=4
-EOF
-fi
+# 设置 vi 显示行号和tab缩进2个字符, >> << 缩进也是2个字符.
+[[ -z $(grep "set nu" ~/.vimrc) ]] && echo "set nu" >> ~/.vimrc
+[[ -z $(grep "set ts=2" ~/.vimrc) ]] && echo "set ts=2" >> ~/.vimrc
+[[ -z $(grep "set shiftwidth=2" ~/.vimrc) ]] && echo "set shiftwidth=2" >> ~/.vimrc
 
 # 设置别名 ll
 if [[ -z $(grep "^alias ll=" ~/.bashrc) ]];then
