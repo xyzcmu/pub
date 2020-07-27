@@ -32,6 +32,20 @@ EOF
 
 
 commonSet() {
+# 设置 DNS 8888 8844
+cat <<EOF >/etc/dhcp/dhclient-enter-hooks.d/nodnsupdate
+#!/bin/sh
+make_resolv_conf(){
+:
+}
+EOF
+chmod +x /etc/dhcp/dhclient-enter-hooks.d/nodnsupdate
+cat > /etc/resolv.conf << EOF
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+EOF
+
+
 read -p "是否修改 镜像源地址 [y/n]?" isChange
 [[ $isChange == "y" ]] && changeSources
 
@@ -329,7 +343,7 @@ apt-get -y install vim
 main() {
 # 菜单选项
 opts[0]="退出"
-opts[1]="设置镜像源地址(us) 开启BBR 时间校准 常用软件,建议重装系统后执行一次"
+opts[1]="设置镜像源地址(us) 开启BBR 时间校准 谷歌DNS 常用软件,建议重装系统后执行一次"
 opts[2]="安装trojan服务端 设置静态站点"
 opts[3]="更新trojan服务端"
 opts[4]="修改ssh 端口"
