@@ -11,13 +11,22 @@ mirror_addr="http://ftp.us.debian.org/debian/"
 yellow "默认 root 密码是:uMiss233"
 echo "默认镜像地址是:$mirror_addr"
 read -p "是否使用默认镜像?　[y/n]" isDef
-if [[ $isDef != "y" ]];then
-  read -p "请输入镜像地址:" mirror_addr
-  if [[ ! $mirror_addr =~ http://ftp\.[a-z]+\.debian\.org/debian/ ]];then
-        echo "输入的地址有误..."
+if [[ $isDef == "n" ]];then
+  echo -e "镜像源:\n\t1.香港\n"
+  read -p "输入你的选择: " num
+  if [[ $num == "1" ]];then
+    mirror_addr="http://ftp.hk.debian.org/debian/"
+  else
+    echo "输入的数字不在选择列表中..."
     exit 1
   fi
+elif [[ $isDef == "y" || $isDef == "" ]];then
+  :
+else 
+  echo "输入错误..."
+  exit 1
 fi
+echo "安装使用的镜像源地址是: $mirror_addr"
 echo "安装过程大约30分钟,根据vps性能不同有所差异..."
 echo "安装好之后,记得修改密码哦!"
 yellow "3s后,开始安装..."
