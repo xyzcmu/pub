@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # 将网卡流量(接受,发送) 写入到rxtx.txt中,避免vps重启后网卡流量重置为零
+# 每3s写一次
 
 [[ -d /root/network_traffic ]] || mkdir -p /root/network_traffic
 
