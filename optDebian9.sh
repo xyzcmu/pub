@@ -62,10 +62,10 @@ EOF
 source ~/.bashrc
 fi
 
-# PS1 设置为亮蓝色
+# PS1 设置主机名 为亮蓝色
 if [[ -z $(grep -E "^PS1.*?34;1m.*?0m.*" ~/.bashrc) ]];then
 cat >> ~/.bashrc << EOF
-PS1="${debian_chroot:+($debian_chroot)}\u@\[\e[34;1m\]\h:\w\\$\[\e[0m\]"
+PS1="${debian_chroot:+($debian_chroot)}\u@\[\e[34;1m\]\h\[\e[0m\]:\w\\$"
 EOF
 source ~/.bashrc
 fi
