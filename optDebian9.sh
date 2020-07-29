@@ -62,6 +62,14 @@ EOF
 source ~/.bashrc
 fi
 
+# PS1 设置为亮蓝色
+if [[ -z $(grep -E "^PS1.*?34;1m.*?0m.*" ~/.bashrc) ]];then
+cat >> ~/.bashrc << EOF
+PS1="${debian_chroot:+($debian_chroot)}\u@\[\e[34;1m\]\h:\w\\$\[\e[0m\]"
+EOF
+source ~/.bashrc
+fi
+
 # 设置上海时间和硬件时间
 cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 hwclock --systohc
