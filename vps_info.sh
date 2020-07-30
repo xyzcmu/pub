@@ -110,7 +110,7 @@ do
 
   start_time=`[[ -f $start_time_path ]] && cat $start_time_path`
 
-  cpu_used=$((100 - `vmstat 1 1|awk 'NR==3{print $(NF-2)}'`))
+  cpu_used=$((100 - `vmstat 1 2|awk 'NR==4{print $(NF-2)}'`))
 
   echo "---每${sleep_time},刷新一次---"
 
