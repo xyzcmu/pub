@@ -33,8 +33,7 @@ fi
 
 while :
 do
-  awk -v start="$start_time" 'NR>2 && $1 !~ /lo:/{printf "start_time:%s\nrxtx:%.f,%.f\n",start,$2+"'$rx'",$10+"'$tx'" > "'${cur_net_statistics_path}'"}' /proc/net/dev 
-  #awk 'NR>2 && $1 !~ /lo:/{printf "rxtx:%.f,%.f\n", $2+rx, $10+tx > "'${cur_net_statistics_path}'"}' /proc/net/dev 
+  awk -v start="$start_time" 'NR>2 && $1 !~ /lo:/{printf "start_time:%s\nrxtx:%.f,%.f\n",start,$2+"'$rx'",$10+"'$tx'" > "'${cur_net_statistics_path}'"}' /proc/net/dev   
   sleep 3s
 done
 
