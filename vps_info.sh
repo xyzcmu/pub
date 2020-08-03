@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # 查看 cpu名称/频率/缓存大小,硬盘,内存,网卡流量 使用情况
-# 将结果写入 html 文件
+# 将结果写入 html 文件, 路径 /usr/share/nginx/html/vps_info.html
 
 # 每10s刷新一次
 sleep_time="10s"
