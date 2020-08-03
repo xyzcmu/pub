@@ -33,6 +33,7 @@ fi
 
 while :
 do
+  # 若有3张及以上网卡,需明确指定统计哪张.
   awk -v start="$start_time" 'NR>2 && $1 !~ /lo:/{printf "start_time:%s\nrxtx:%.f,%.f\n",start,$2+"'$rx'",$10+"'$tx'" > "'${cur_net_statistics_path}'"}' /proc/net/dev   
   sleep 3s
 done
