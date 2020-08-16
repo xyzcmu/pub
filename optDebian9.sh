@@ -178,7 +178,7 @@ fi
 
 # 安装证书(通过拷贝的方式放到相应目录)
 # 重启 nginx
-/root/.acme.sh/acme.sh --installcert -d $your_domain \
+/root/.acme.sh/acme.sh --install-cert -d $your_domain \
 --key-file $key \
 --fullchain-file $cert \
 --reloadcmd "nginx -s reload"
