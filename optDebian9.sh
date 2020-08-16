@@ -173,7 +173,7 @@ yellow "证书签发失败!"
 return 1
 fi
 
-# 自动更新 acme.sh
+# 更新 acme.sh, 以后也自动更新 acme.sh
 /root/.acme.sh/acme.sh  --upgrade  --auto-upgrade
 
 # 安装证书(通过拷贝的方式放到相应目录)
