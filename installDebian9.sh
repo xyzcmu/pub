@@ -12,7 +12,6 @@ wget --no-check-certificate -qO InstallNET.sh $sh_path && chmod a+x InstallNET.s
 
 mirror_addr="http://ftp.us.debian.org/debian/"
 
-yellow "默认 root 密码是:uMiss233"
 echo "默认镜像地址是:$mirror_addr"
 read -p "是否使用默认镜像?　[y/n]" isDef
 if [[ $isDef == "n" ]];then
@@ -31,13 +30,13 @@ else
   exit 1
 fi
 echo "安装使用的镜像源地址是: $mirror_addr"
-echo "安装过程大约30分钟,根据vps性能不同有所差异..."
+echo "安装过程大约30分钟,根据vps性能, 网络不同有所差异..."
 echo "安装好之后,记得修改密码哦!"
+yellow "默认 root 密码是:uMiss233"
 yellow "3s后,开始安装..."
-yellow "3..."
-sleep 1
-yellow "2..."
-sleep 1
-yellow "1..."
-sleep 1
+for i in $(seq 3);do
+  yellow "$((4 - i))..."
+  sleep 1s
+done
+# 若要安装 centos ubuntu, 请自行修改.
 bash InstallNET.sh -p uMiss233 -d 9 -v 64 -a --mirror "$mirror_addr"
