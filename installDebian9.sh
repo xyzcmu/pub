@@ -3,8 +3,12 @@ yellow(){
   echo -e "\033[33m\033[01m[ $1 ]\033[0m"
 }
 
-# 安装 debian9 官方ISO
-wget --no-check-certificate -qO InstallNET.sh 'https://moeclub.org/attachment/LinuxShell/InstallNET.sh' && chmod a+x InstallNET.sh
+# 获取 安装脚本
+sh_path='https://moeclub.org/attachment/LinuxShell/InstallNET.sh'
+wget --no-check-certificate --spider --timeout=3 -o /dev/null $sh_path
+[[ $? == 0 ]] || sh_path='https://raw.githubusercontent.com/xyzcmu/pub/master/backup/sysInstallNet.sh'
+
+wget --no-check-certificate -qO InstallNET.sh $sh_path && chmod a+x InstallNET.sh
 
 mirror_addr="http://ftp.us.debian.org/debian/"
 
