@@ -37,7 +37,7 @@ start() {
     ${cur_dir}"/"${path_a} &>/dev/null & 
     echo "$path_a is started..."
   } || echo "$path_a is running ..."
-
+  sleep 1
   [[ $pid_b == "" ]] && { 
     ${cur_dir}"/"${path_b} &>/dev/null & 
     echo "$path_b is started..."
