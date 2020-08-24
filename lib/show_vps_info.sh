@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # 查看 cpu名称/频率/缓存大小,硬盘,内存,网卡流量 使用情况
-# $1 == "-screen" 输出到命令行, 也可以通过 ip/vps_info.html 查看.
+# 通过 ip/vps_info.html 查看.
 # 依赖 nginx, 若没有nginx, 自动安装.
 # 将结果写入 /usr/share/nginx/html/vps_info.html 文件
 
@@ -9,7 +9,7 @@
 pwd_path=$(cd $(dirname $0) && pwd)
 
 # 每10s刷新一次
-sleep_time="10s"
+sleep_time=10
 
 # 网卡rxtx 信息
 net_path="${pwd_path}/net_statistics.txt"
@@ -145,8 +145,9 @@ createHTML(){
   html=${before_body}${body}${after_body}
   echo $html > $html_path
 }
-
+# 若要输出到屏幕, 可将该函数加入 while 中.
 screen() {
+  echo "======$sleep_time s 刷新一次======="
   echo -e "cpu_model: $cpu_model\ncpu_cores: $cpu_cores\ncpu_MHz: $cpu_hz\ncpu_cache: $cpu_cache\ncpu_used: $cpu_used%"
   echo -e "mem_total: $mem_total\nmem_used: $mem_used"
   echo -e "disk_total: $disk_total\ndisk_used: $disk_used"
@@ -171,14 +172,9 @@ do
 
   cpu_used=$((100 - `vmstat 1 2|awk 'NR==4{print $(NF-2)}'`))
 
-  echo "---每${sleep_time},刷新一次---"
-
   cur_time=$(date '+%Y-%m-%d %H:%M:%S')
 
   createHTML "$cpu_model" "$cpu_hz" "$cpu_cache" "$cpu_cores" "$mem_total" "$mem_used" "$disk_total" "$disk_used" "$start_time" "$rx" "$tx" "${cpu_used}" "$cur_time"
   
-  echo "可通过 ${my_ip}/vps_info.html 查看vps信息"
-  # 是否显示到stdout
-  [[ $1 == "-screen" ]] && screen
   sleep ${sleep_time}
 done
