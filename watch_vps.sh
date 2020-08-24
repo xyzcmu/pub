@@ -81,6 +81,8 @@ stat() {
 }
 
 uninstall() {
+  stop
+  
   rm -rf $cur_dir"/$md"
   rm -rf $cur_dir"/$0"
 
