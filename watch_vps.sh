@@ -42,6 +42,8 @@ start() {
     ${cur_dir}"/"${path_b} &>/dev/null & 
     echo "$path_b is started..."
   } || echo "$path_b is running ..."
+  
+  echo "通过 ip[域名]/vps_info.html 查看vps使用情况"
 }
 
 get_pids() {
@@ -77,6 +79,8 @@ stat() {
   get_pids
   [[ $pid_a != "" ]] && echo "$path_a ==>PID:$pid_a" || echo "$path_a is stopped..."
   [[ $pid_b != "" ]] && echo "$path_b ==>PID:$pid_b" || echo "$path_b is stopped..."
+  
+  echo "通过 ip[域名]/vps_info.html 查看vps使用情况"
 }
 
 uninstall() {
