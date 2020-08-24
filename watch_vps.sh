@@ -5,7 +5,7 @@ cur_dir=$(cd $(dirname $0) && pwd)
 sh_a="https://raw.githubusercontent.com/xyzcmu/pub/master/lib/record_rxtx.sh"
 sh_b="https://raw.githubusercontent.com/xyzcmu/pub/master/lib/show_vps_info.sh"
 
-md="vps_watcher_data"
+md="watch_vps_data"
 path_a="$md/a.sh"
 path_b="$md/b.sh"
 
@@ -18,38 +18,46 @@ download() {
   rm -rf $md"/$path_b"
 
   wget --no-check-certificate -O $path_a $sh_a
-  [[ $? == 0 ]] && chmod +x ".$path_a" || echo "download $sh_a fail!"
+  [[ $? == 0 ]] && chmod +x "$path_a" || echo "download $sh_a fail!"
   wget --no-check-certificate -O $path_b $sh_b
-  [[ $? == 0 ]] && chmod +x ".$path_b" || echo "download $sh_b fail!"
+  [[ $? == 0 ]] && chmod +x "$path_b" || echo "download $sh_b fail!"
 }
 
 start() {
-  [[ ! -f $md"/$path_a" || ! -f $md"/$path_b" ]] && download
+  [[ ! -f "$path_a" || ! -f "$path_b" ]] && download
 
   get_pids
 
   [[ $pid_a == "" ]] && { 
-    ${cur_dir}${md}${path_a} &>/dev/null & 
+    ${cur_dir}"/"${path_a} &>/dev/null & 
+    echo "$path_a is started..."
   } || echo "$path_a is running ..."
+
   [[ $pid_b == "" ]] && { 
-    ${cur_dir}${md}${path_b} &>/dev/null & 
+    ${cur_dir}"/"${path_b} &>/dev/null & 
+    echo "$path_b is started..."
   } || echo "$path_b is running ..."
 }
 
 get_pids() {
-  pid_a=$(ps aux|awk '/'$path_a'/ && !/awk/{print $2}')
-  pid_b=$(ps aux|awk '/'$path_b'/ && !/awk/{print $2}')
+  reg_a=${path_a:0:-3}
+  reg_a=${reg_a//\//\\\/}
+  reg_b=${path_b:0:-3}
+  reg_b=${reg_b//\//\\\/}
+
+  pid_a=$(ps aux|awk '/'${reg_a}'/ && !/awk/{print $2}')
+  pid_b=$(ps aux|awk '/'${reg_b}'/ && !/awk/{print $2}')
 }
 
 daemon() {
   crontab -l > /tmp/mycron 
   grep -q $path_a /tmp/mycron || {
-    echo "@reboot sleep 2;"$cur_dir""/$md""/$path_a" &>/dev/null &" >> \
+    echo "@reboot sleep 2;"$cur_dir""/$path_a" &>/dev/null &" >> \
 	/tmp/mycron && crontab /tmp/mycron
   }
 
   grep -q $path_b /tmp/mycron || {
-	echo "@reboot sleep 3;"$cur_dir""/$md""/$path_b" &>/dev/null &" >> \
+	echo "@reboot sleep 3;"$cur_dir""/$path_b" &>/dev/null &" >> \
 	/tmp/mycron && crontab /tmp/mycron
   }
   rm -rf /tmp/mycron
@@ -67,7 +75,7 @@ stop() {
 
 stat() {
   get_pids
-
+  echo "----$pid_a----$pid_b----"
   [[ $pid_a != "" ]] && echo "$path_a ==>PID:$pid_a" || echo "$path_a is stopped..."
   [[ $pid_b != "" ]] && echo "$path_b ==>PID:$pid_b" || echo "$path_b is stopped..."
 }
@@ -75,8 +83,8 @@ stat() {
 uninstall() {
   rm -rf $cur_dir"/$md"
   rm -rf $cur_dir"/$0"
-  crontab -l > /tmp/mycron && sed -i -e "/$path_a/d" -e "/$path_b/d" /tmp/mycron \ 
-    && crontab /tmp/mycron && rm -rf /tmp/mycron
+  crontab -l > /tmp/mycron && sed -i -e "/$path_a/d" -e "/$path_b/d" /tmp/mycron \
+	&& crontab /tmp/mycron && rm -rf /tmp/mycron
   echo "$0 and its data are deleted..."
 }
 
@@ -99,7 +107,7 @@ EOF
 
 main(){
   [[ $# > 1 ]] && echo "require one arg, but got > 1" && exit 1
-  case $1 in
+  case "$1" in
     start) start;daemon;;
     stop) stop;;
     stat) stat;;
@@ -109,5 +117,5 @@ main(){
   esac
 }
 
-main
+main $@
 
