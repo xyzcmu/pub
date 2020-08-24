@@ -9,6 +9,11 @@ md="watch_vps_data"
 path_a="$md/a.sh"
 path_b="$md/b.sh"
 
+reg_a=${path_a:0:-3}
+reg_a=${reg_a//\//\\\/}
+reg_b=${path_b:0:-3}
+reg_b=${reg_b//\//\\\/}
+
 download() {
   wget --spider -q google.com &>/dev/null
   [[ $? == 127 ]] && apt update && apt install wget -y
@@ -40,11 +45,6 @@ start() {
 }
 
 get_pids() {
-  reg_a=${path_a:0:-3}
-  reg_a=${reg_a//\//\\\/}
-  reg_b=${path_b:0:-3}
-  reg_b=${reg_b//\//\\\/}
-
   pid_a=$(ps aux|awk '/'${reg_a}'/ && !/awk/{print $2}')
   pid_b=$(ps aux|awk '/'${reg_b}'/ && !/awk/{print $2}')
 }
@@ -83,7 +83,8 @@ stat() {
 uninstall() {
   rm -rf $cur_dir"/$md"
   rm -rf $cur_dir"/$0"
-  crontab -l > /tmp/mycron && sed -i -e "/$path_a/d" -e "/$path_b/d" /tmp/mycron \
+
+  crontab -l > /tmp/mycron && sed -i -e "/$reg_a/d" -e "/$reg_b/d" /tmp/mycron \
 	&& crontab /tmp/mycron && rm -rf /tmp/mycron
   echo "$0 and its data are deleted..."
 }
