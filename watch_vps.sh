@@ -5,7 +5,7 @@ cur_dir=$(cd $(dirname $0) && pwd)
 sh_a="https://raw.githubusercontent.com/xyzcmu/pub/master/lib/record_rxtx.sh"
 sh_b="https://raw.githubusercontent.com/xyzcmu/pub/master/lib/show_vps_info.sh"
 
-md="watch_vps_data"
+md="vps_data"
 path_a="$md/a.sh"
 path_b="$md/b.sh"
 
