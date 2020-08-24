@@ -75,7 +75,6 @@ stop() {
 
 stat() {
   get_pids
-  echo "----$pid_a----$pid_b----"
   [[ $pid_a != "" ]] && echo "$path_a ==>PID:$pid_a" || echo "$path_a is stopped..."
   [[ $pid_b != "" ]] && echo "$path_b ==>PID:$pid_b" || echo "$path_b is stopped..."
 }
