@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # 获取使用的网卡名
-net_name=$(ip route show 2>/dev/null | awk '/default via/{print $NF}')
+net_name=$(ip route show 2>/dev/null | awk '/default via/{print $5}')
 [[ $net_name == "" ]] && {
   read -p "请手动输入网卡名称:" nn
   net_name=$nn
