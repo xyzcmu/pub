@@ -68,9 +68,7 @@ rt=$?
 # $? == 127 systemctl命令不存在
 if [[ $rt != 127 && $rt != 0 ]];then
   # install nginx
-  apt update && apt install nginx -y
-  systemctl enable nginx
-  systemctl start nginx
+  apt update && apt install nginx -y  
   cat > /etc/nginx/conf.d/vps_info.conf << EOF
 server {
 listen 80;
@@ -78,6 +76,8 @@ server_name $my_ip;
 root /usr/share/nginx/html;
 }
 EOF
+systemctl enable nginx
+systemctl start nginx
 fi
 
 
