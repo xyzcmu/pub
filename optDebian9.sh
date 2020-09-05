@@ -206,12 +206,11 @@ if [[ "$version" != "$cur_ver" ]];then
   echo "$version" > ./trojan/trojan.ver
   bred "开始下载trojan服务端..."
   wget --no-check-certificate https://github.com/trojan-gfw/trojan/releases/download/v$version/trojan-$version-linux-amd64.tar.xz &&
-  echo "trojan服务端下载成功!"  
+  echo "trojan服务端下载成功!"
+  tar -xJf trojan-$version-linux-amd64.tar.xz
 else
   echo "当前trojan已经是最新版本!"
 fi
-
-tar -xJf trojan-$version-linux-amd64.tar.xz
 }
 
 
