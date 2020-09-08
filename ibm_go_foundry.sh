@@ -21,7 +21,7 @@
 # 将该网址 填入 服务器地址栏 和 TLS设置里的服务器栏
 # ws 协议块中的请求头: HOST 该网址
 
-# 自选 cloudflare ip 加速(https://github.com/badafans/better-cloudflare-ip)
+# 自选 cloudflare ip 加速
 # 将 获取到的比较快的ip 填入上面的 服务器地址栏 即可.
 
 
