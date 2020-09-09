@@ -111,7 +111,7 @@ clone_repo(){
         echo 'error: 下载V2Ray失败，请重试'
         return 1
     fi
-    unzip latest-v2ray.zip v2ray v2ctl geoip.dat geosite.dat
+    unzip latest-v2ray.zip
     rm latest-v2ray.zip
     
     chmod 0755 ./*
