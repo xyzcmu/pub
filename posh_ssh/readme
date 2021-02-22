@@ -1,0 +1,19 @@
+# for more detail, visit https://github.com/darkoperator/Posh-SSH
+
+# upload file to Linux sever, auto-populated password
+# sample.ps1:
+add-type -path "path-to/PoshSSH.dll"
+
+$User = read-host "Enter Username"
+# $File = get-content c:/xyz/passw.txt;
+$Password = read-host "Enter Password" -AsSecureString
+
+$LocalFile = "c:/xyz/ts 2/t66.exe"
+$RemotePath = "/root/xx"
+$LinuxServer = "ip or domain"
+$ServerPort = 233
+
+$credential = New-Object -TypeName System.Management.Automation.PSCredential `
+ -ArgumentList $User, $Password
+
+Set-SCPFile -ComputerName $LinuxServer -Port $ServerPort -Credential $credential -RemotePath $RemotePath -LocalFile $LocalFile
