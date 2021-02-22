@@ -1,4 +1,6 @@
 # for more detail, visit https://github.com/darkoperator/Posh-SSH
+# ver: 2.2
+# releasedate: 12 may 2019
 
 # upload file to Linux sever, auto-populated password
 # sample.ps1:
