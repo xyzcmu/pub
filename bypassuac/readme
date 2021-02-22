@@ -1,0 +1,7 @@
+用法: rundll32.exe path-to-BypassUAC.dll,BypassUAC exe_path,window_status,exe_parameters
+// window_status: show/min/hide 三选一.
+
+// 三种情况
+// exe_path,window_status,exe_parameters
+// exe_path,window_status
+// exe_path
