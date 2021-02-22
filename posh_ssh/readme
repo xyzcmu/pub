@@ -3,14 +3,14 @@
 # releasedate: 12 may 2019
 
 # upload file to Linux sever, auto-populated password
+
 # sample.ps1:
 add-type -path "path-to/PoshSSH.dll"
-
 $User = read-host "Enter Username"
 # $File = get-content c:/xyz/passw.txt;
 $Password = read-host "Enter Password" -AsSecureString
 
-$LocalFile = "c:/xyz/ts 2/t66.exe"
+$LocalFile = "path-to/yourfile"
 $RemotePath = "/root/xx"
 $LinuxServer = "ip or domain"
 $ServerPort = 233
