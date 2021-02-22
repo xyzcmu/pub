@@ -3,6 +3,8 @@
 # releasedate: 12 may 2019
 
 # upload file to Linux sever, auto-populated password
+# can not be used in PowerShell with the core version.
+# check the version: $psversiontable
 
 # sample.ps1:
 add-type -path "path-to/PoshSSH.dll"
